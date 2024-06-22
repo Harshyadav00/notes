@@ -34,9 +34,9 @@ const AuthProvider = ({ children }) => {
                 try{
                     localStorage.setItem("user", JSON.stringify(response.data));
                 } catch (err) {
-                    console.log(err.message);
+                    console.log(err.message);       
                 }
-                setToken(response.data.token);
+                setToken(response.data.jwtToken);
                 return;
             }
             throw new Error(response.message);

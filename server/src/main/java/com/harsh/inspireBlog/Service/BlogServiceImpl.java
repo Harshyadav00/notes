@@ -1,6 +1,6 @@
 package com.harsh.inspireBlog.Service;
 
-import com.harsh.inspireBlog.Exception.UnauthorizedAccessException;
+import com.harsh.inspireBlog.Exception.BlogNotFoundException;
 import com.harsh.inspireBlog.Model.Blog;
 import com.harsh.inspireBlog.Repository.BlogRepository;
 import io.micrometer.common.util.StringUtils;
@@ -85,7 +85,7 @@ public class BlogServiceImpl implements  BlogService{
             return blogRepository.save(existingBlog);
         } catch (DataAccessException e) {
             logger.error("Error updating blog post: ", e);
-            throw new RuntimeException("Error updating blog post", e); // Or return a custom error response
+            throw new RuntimeException("Error updating blog post" + e.getMessage()); // Or return a custom error response
         }
     }
 
@@ -93,18 +93,25 @@ public class BlogServiceImpl implements  BlogService{
     @Override
     public Blog getBlogById(Integer id) {
         return blogRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Blog not found with given id: " + id));
+                .orElseThrow(() -> new BlogNotFoundException("Blog not found with given id: " + id));
     }
 
     @Override
     public List<Blog> getBlogsByAuthorId(String author) {
         return blogRepository.findAllByAuthor(author)
-                .orElseThrow(() -> new RuntimeException("Blogs not found with given author Email: " + author));
+                .orElseThrow(() -> new BlogNotFoundException("Blogs not found with given author Email: " + author));
 
     }
 
     @Override
-    public void deleteBlog(Integer blogId) {
+    public void deleteBlog(Integer blogId) throws BlogNotFoundException {
+
+        // Check if blog exists before deleting
+        Blog blog = blogRepository.findById(blogId)
+                .orElseThrow(() -> new BlogNotFoundException("Blog not found with id: " + blogId));
+
+        // Delete blog if it exists
         blogRepository.deleteById(blogId);
     }
+
 }

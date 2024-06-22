@@ -19,7 +19,7 @@ const Sidebar = (props) => {
             <div className="sidebar__header">
                 <button className="sidebar__header-btn" onClick={props.newNote} >+</button>
             </div>
-            <ul className="note-list" style={{overflow:"scroll"}}>
+            <ul className="note-list" >
                 {noteList}
             </ul>
         </section>

@@ -4,10 +4,7 @@ import Sidebar from './Sidebar';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../actions/AuthProvider";
-import axios from 'axios';
 import { createNewNote, deleteNoteApi, fetchAllNotes, updateNewNote } from "../service/post";
-
-const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const Main = () => {
   const { user, token } = useAuth();
@@ -25,6 +22,7 @@ const Main = () => {
   useEffect(() => {
     fetchNotes();
     findCurrentNote();
+    // setCurrentNote();   
   }, []);
 
   const fetchNotes = async () => {
@@ -53,9 +51,8 @@ const Main = () => {
         token
       }
       const response = await createNewNote(data);
-      const newNotes = ((prevNotes) => [...prevNotes, response.data]);
-      setNotes(newNotes);
-      setCurrentNote(response.data.id);
+      // setNotes(([...prevNotes, response.data]);
+      setNotes((prevNotes) => [...prevNotes, response.data]);
     } catch (error) {
       console.error(error);
     }

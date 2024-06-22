@@ -1,5 +1,6 @@
 package com.harsh.inspireBlog.Controller;
 
+import com.harsh.inspireBlog.Exception.BlogNotFoundException;
 import com.harsh.inspireBlog.Model.Blog;
 import com.harsh.inspireBlog.Service.BlogService;
 import com.harsh.inspireBlog.Service.BlogServiceImpl;
@@ -35,8 +36,8 @@ public class BlogController {
         return blogServiceImpl.getBlogsByAuthorId(author);
     }
 
-    @PostMapping("/delete")
-    public  void deleteBlog(@RequestParam Integer blogId){
+    @GetMapping("/delete")
+    public  void deleteBlog(@RequestParam Integer blogId) throws BlogNotFoundException {
         blogServiceImpl.deleteBlog(blogId);
     }
 

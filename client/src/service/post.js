@@ -43,8 +43,7 @@ export const updateNewNote = async (props) => {
 
 export const deleteNoteApi = async (props) => {
   try {
-    console.log(props);
-    const response = await axios.post(`${baseURL}/api/notes/delete?blogId=${props.noteId}`, {
+    const response = await axios.get(`${baseURL}/api/notes/delete?blogId=${props.noteId}`, {
       headers : { 'Authorization' : props.token }
     });
     return response;

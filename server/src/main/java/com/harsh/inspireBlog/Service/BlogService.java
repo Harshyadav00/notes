@@ -1,5 +1,6 @@
 package com.harsh.inspireBlog.Service;
 
+import com.harsh.inspireBlog.Exception.BlogNotFoundException;
 import com.harsh.inspireBlog.Model.Blog;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface BlogService {
 
     List<Blog> getBlogsByAuthorId(String author);
 
-    void deleteBlog(Integer blogId);
+    void deleteBlog(Integer blogId) throws BlogNotFoundException;
 }
